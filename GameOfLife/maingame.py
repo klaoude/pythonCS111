@@ -1,7 +1,7 @@
 from Window import *
 
-NUM_CASE_X = 100
-NUM_CASE_Y = 100
+NUM_CASE_X = 50
+NUM_CASE_Y = 50
 CASE_SIZE = 10
 
 class MainGame:
@@ -33,7 +33,7 @@ class MainGame:
 		c = True
 		while c:
 			for e in pygame.event.get():
-				if(e.type == pygame.MOUSEBUTTONUP):
+				if(pygame.mouse.get_pressed()[0]):
 					x = pygame.mouse.get_pos()[0]//CASE_SIZE
 					y = pygame.mouse.get_pos()[1]//CASE_SIZE
 					self.toggle(x, y)
@@ -77,6 +77,9 @@ class MainGame:
 		return wasAlive
 
 	def turn(self, nbTurn = 1):
+		for e in pygame.event.get():
+			if(e.type == pygame.KEYDOWN and e.key == pygame.K_e):
+				editMode()
 		newMap = []
 		for i in range(0, NUM_CASE_X):
 			newMap.append([])
@@ -86,3 +89,4 @@ class MainGame:
 			for j in range(0, NUM_CASE_Y):
 				newMap[i][j] = self.aliveNextTurn(i, j)
 		self.map = newMap
+		self.print()
